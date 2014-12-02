@@ -3,27 +3,28 @@
 <head>
 	<title>Tv media</title>
 	<script src="http://code.jquery.com/jquery-2.1.1.js" type="application/javascript"></script>
-	<script type="text/javascript" src="js/RandomMedias.js"></script>
+	<script type="text/javascript" src="js/randommedias/RandomMedias.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/Joieducode.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/Codeloving.js"></script>
 </head>
 <body>
-<h2>Hello World!</h2>
+<h2>Generate medias !</h2>
 <script>
-	RandomMedias.init([
-		new RandomMedias.Media("joieducode.com", function () {
-			return "http://joieducode/image"
-		}),
-		new RandomMedias.Media("thecodinglove.com", function () {
-			return "http://thecodinglove/image"
-		})
-	]);
+	$(document).ready(function() {
+		RandomMedias.init([
+			new JoieDuCode(),
+			new Codeloving(),
+		]);
 
-	if (console.log) console.log("Sources: "+RandomMedias.mediaNames().toString());
-	var result = RandomMedias.nextMedia();
-	if (console.log) console.log(result);
-	result = RandomMedias.nextMedia();
-	if (console.log) console.log(result);
-	result = RandomMedias.nextMedia();
-	if (console.log) console.log(result);
+		$(document).bind("/RandomMedia/newMedia", function(event, media) {
+			console.log(media.title+" ["+media.url+"]");
+		});
+
+		console.info(RandomMedias.mediaNames());
+		RandomMedias.changeMedia();
+		RandomMedias.changeMedia();
+		RandomMedias.changeMedia();
+	});
 </script>
 </body>
 </html>
