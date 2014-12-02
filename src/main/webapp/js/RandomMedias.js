@@ -2,18 +2,25 @@
  * Created by nargit on 27/11/2014.
  */
 
-/**
- *
- * @param uri
- * @param getNextMediaFunction
- * @constructor
- */
+function Media(name) {
+	this.name = name;
+}
+
+Media.prototype.nextMedia = function () {
+	throw new SyntaxError("Nothing implemented dude")
+}
+
+function JoieDuCode() {
+	Media.call(this, ["joie du code"]);
+}
+
+JoieDuCode.prototype = Object.create(Media.prototype);
+JoieDuCode.prototype.constructor = JoieDuCode;
+
+var monMedia = new JoieDuCode();
+console.log(monMedia.name);
+
 var RandomMedias = {
-	/**
-	 * @param name
-	 * @param getNextMediaFunction
-	 * @constructor
-	 */
 	Media: function (name, getNextMediaFunction) {
 		this.name = name;
 		this.getNextMedia = getNextMediaFunction;
