@@ -6,24 +6,28 @@
 	<script type="text/javascript" src="js/randommedias/RandomMedias.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/Joieducode.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/Codeloving.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/Xkcd.js"></script>
 </head>
 <body>
 <h2>Generate medias !</h2>
 <script>
-	$(document).ready(function() {
+	$(document).ready(function () {
 		RandomMedias.init([
+/*
 			new JoieDuCode(),
 			new Codeloving(),
+*/
+			new Xkcd()
 		]);
 
-		$(document).bind("/RandomMedia/newMedia", function(event, media) {
-			console.log(media.title+" ["+media.url+"]");
+		$(document).bind("/RandomMedia/newMedia", function (event, media) {
+			console.log(media.title + " [" + media.url + "]");
 		});
 
 		console.info(RandomMedias.mediaNames());
-		RandomMedias.changeMedia();
-		RandomMedias.changeMedia();
-		RandomMedias.changeMedia();
+		RandomMedias.updateMedia();
+		//RandomMedias.updateMedia();
+		//RandomMedias.updateMedia();
 	});
 </script>
 </body>

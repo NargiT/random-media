@@ -3,9 +3,8 @@
  */
 
 /**
- * Interface
- * @param name
- * @param url
+ * @param {String} name name of the source
+ * @param {String} url uri that will be called asynchronously
  * @constructor
  */
 function Media(name, url) {
@@ -14,9 +13,57 @@ function Media(name, url) {
 }
 
 Media.prototype.randomMedia = function (data) {
-	throw new SyntaxError("Nothing implemented dude");
+	throw new SyntaxError("Nothing implemented dude.");
 };
 
+/**
+ *
+ * @param {Array.<Media>} medias
+ * @constructor
+ */
+function RandomMedias(medias) {
+	if (!medias instanceof Array) {
+		throw new SyntaxError("medias is not an Array.");
+	}
+	this.medias = medias;
+	this.media = {title: "", url: ""};
+
+	var publishChannel = "/RandomMedia/newMedia";
+	var privateChannel = "/RandomMedias/_currentMedia";
+
+	$(this.media).on(privateChannel, function (event) {
+		jQuery.event.trigger(publishChannel, [this]);
+	});
+}
+
+RandomMedias.prototype.updateMedia = function () {
+
+};
+
+RandomMedias.prototype.mediaNames = function () {
+	var result = [];
+	this.medias.forEach(
+		function (aMedia) {
+			result.push(aMedia.name)
+		}
+	);
+	return result;
+};
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * publish the next media url in "/RandomMedia/newMedia" channel
+ * @type {{media: {title: string, url: string}, init: Function, changeMedia: Function, mediaNames: Function}}
+ */
 var RandomMedias = {
 	media: {title: "", url: ""},
 
@@ -31,6 +78,7 @@ var RandomMedias = {
 			this.nextMedia = function () {
 				var currentIndex = iterator++ % mediaCollection.length;
 				var currentMedia = mediaCollection[currentIndex];
+				var publishChannel = "/RandomMedia/newMedia";
 				if (currentMedia instanceof Media) {
 					$.ajax({
 						url: currentMedia.url,
@@ -38,21 +86,14 @@ var RandomMedias = {
 					}).done(function (data, textStatus, jqXHR) {
 						RandomMedias.media = currentMedia.randomMedia(data);
 						// trigger global event
-						jQuery.event.trigger("/RandomMedia/newMedia", [RandomMedias.media]);
+						jQuery.event.trigger(publishChannel, [RandomMedias.media]);
 					}).fail(function (jqXHR, textStatus, errorThrown) {
-						console.log("Fail : " + textStatus);
+						console.log("Failed : " + jqXHR.toString() + " " + textStatus);
 					});
 				}
 			};
 
 			this.mediaNames = function () {
-				var result = [];
-				mediaCollection.forEach(
-					function (media) {
-						result.push(media.name)
-					}
-				);
-				return result;
 			}
 		};
 
