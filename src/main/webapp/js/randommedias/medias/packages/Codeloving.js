@@ -7,13 +7,12 @@ function Codeloving() {
 
 Codeloving.prototype = Object.create(Media.prototype);
 Codeloving.prototype.constructor = Codeloving;
-Codeloving.prototype.randomMedia = function (data) {
+Codeloving.prototype.updateMedia = function (data) {
 	var posts = data.response.posts;
 	var index = Math.floor(Math.random() * posts.length);
 	var regEx = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
 
-	return {
-		url: regEx.exec(data.response.posts[index].body)[1],
-		title: data.response.posts[index].title
-	};
+	this._currentMedia.url = regEx.exec(data.response.posts[index].body)[1];
+	this._currentMedia.title = data.response.posts[index].title;
+	this.notify();
 };

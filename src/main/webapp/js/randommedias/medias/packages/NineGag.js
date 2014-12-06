@@ -7,7 +7,7 @@ function NineGag() {
 // TODO:
 NineGag.prototype = Object.create(Media.prototype);
 NineGag.prototype.constructor = NineGag;
-NineGag.prototype.randomMedia = function (data) {
+NineGag.prototype.updateMedia = function (data) {
 
 	return {
 		url: "",

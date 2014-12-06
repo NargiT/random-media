@@ -3,31 +3,45 @@
 <head>
 	<title>Tv media</title>
 	<script src="http://code.jquery.com/jquery-2.1.1.js" type="application/javascript"></script>
-	<script type="text/javascript" src="js/randommedias/RandomMedias.js"></script>
-	<script type="text/javascript" src="js/randommedias/medias/Joieducode.js"></script>
-	<script type="text/javascript" src="js/randommedias/medias/Codeloving.js"></script>
-	<script type="text/javascript" src="js/randommedias/medias/Xkcd.js"></script>
+	<script type="text/javascript" src="js/observer/ObserverPattern.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/Media.js"></script>
+	<script type="text/javascript" src="js/randommedias/Screen.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/packages/Joieducode.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/packages/Codeloving.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/packages/Xkcd.js"></script>
 </head>
 <body>
-<h2>Generate medias !</h2>
+<style type="text/css">
+.container {
+	text-align: center;
+	margin: auto;
+}
+</style>
+<div class="container">
+	<h3 id="myTitle"></h3>
+	<img id="myImage" src=""/>
+</div>
 <script>
 	$(document).ready(function () {
-		RandomMedias.init([
-/*
+		var myapp = new Screen([
 			new JoieDuCode(),
-			new Codeloving(),
-*/
-			new Xkcd()
+			new Xkcd(),
+			new Codeloving()
 		]);
 
-		$(document).bind("/RandomMedia/newMedia", function (event, media) {
-			console.log(media.title + " [" + media.url + "]");
+		$(document).bind(myapp.PUBLIC_TOPIC, function (event, media) {
+			console.log("public notification received:" + media.title + " [" + media.url + "]");
+			$("#myTitle").html(media.title);
+			var image = new Image();
+			image.src = media.url;
+			$("#myImage").attr("src", media.url);
 		});
 
-		console.info(RandomMedias.mediaNames());
-		RandomMedias.updateMedia();
-		//RandomMedias.updateMedia();
-		//RandomMedias.updateMedia();
+		console.info(myapp.mediaNames());
+		myapp.updateMedia();
+		setInterval(function () {
+			myapp.updateMedia()
+		}, 30000);
 	});
 </script>
 </body>
