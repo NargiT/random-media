@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="js/randommedias/medias/Media.js"></script>
 	<script type="text/javascript" src="js/randommedias/Screen.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/Joieducode.js"></script>
-	<script type="text/javascript" src="js/randommedias/medias/packages/Codeloving.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/packages/Codinglove.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/Xkcd.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/NineGag.js"></script>
 </head>
@@ -27,7 +27,7 @@
 		var myapp = new Screen([
 			new JoieDuCode(),
 			new Xkcd(),
-			new Codeloving(),
+			new Codinglove(),
 			new NineGag()
 		]);
 
@@ -45,7 +45,7 @@
 		myapp.updateMedia();
 		setInterval(function () {
 			myapp.updateMedia()
-		}, 5000);
+		}, 30000);
 	});
 </script>
 </body>
