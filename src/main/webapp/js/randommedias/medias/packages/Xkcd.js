@@ -2,7 +2,8 @@
  * Created by nargit on 05/12/2014.
  */
 function Xkcd() {
-	Media.apply(this, ["xkcd", "http://dynamic.xkcd.com/api-0/jsonp/comic/"]);
+	var parameters = ["xkcd", "http://dynamic.xkcd.com/api-0/jsonp/comic/"];
+	Media.apply(this, parameters);
 }
 
 Xkcd.prototype = Object.create(Media.prototype);
@@ -16,12 +17,13 @@ Xkcd.prototype.updateMedia = function (data) {
 	// process an asynchronous call to get a random image
 	$.ajax({
 		url: url,
-		dataType: "jsonp",
+		dataType: self.dataType,
+		timeout: 2000,
 		success: function (data, textStatus, jqXHR) {
-			var media = {title: data.title, url: data.img};
-			self._currentMedia.title = media.title;
-			self._currentMedia.url = media.url;
-			self.notify();
+			var title = data.title;
+			var media = data.img;
+			var link = "http://xkcd.com/"+num;
+			self.setCurrentMedia(new MediaDTO(title, media, link, self.name));
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log(this.name + " failed to get the image");

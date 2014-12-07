@@ -3,12 +3,12 @@
 <head>
 	<title>Tv media</title>
 	<script src="http://code.jquery.com/jquery-2.1.1.js" type="application/javascript"></script>
-	<script type="text/javascript" src="js/observer/ObserverPattern.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/Media.js"></script>
 	<script type="text/javascript" src="js/randommedias/Screen.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/Joieducode.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/Codeloving.js"></script>
 	<script type="text/javascript" src="js/randommedias/medias/packages/Xkcd.js"></script>
+	<script type="text/javascript" src="js/randommedias/medias/packages/NineGag.js"></script>
 </head>
 <body>
 <style type="text/css">
@@ -18,30 +18,34 @@
 }
 </style>
 <div class="container">
+	<h2 id="mySource"></h2>
 	<h3 id="myTitle"></h3>
-	<img id="myImage" src=""/>
+	<a id="myLink" href="" target="_blank"><img id="myImage" src=""/></a>
 </div>
 <script>
 	$(document).ready(function () {
 		var myapp = new Screen([
-			new JoieDuCode(),
+			//new JoieDuCode(),
 			new Xkcd(),
-			new Codeloving()
+			//new Codeloving(),
+			new NineGag()
 		]);
 
 		$(document).bind(myapp.PUBLIC_TOPIC, function (event, media) {
-			console.log("public notification received:" + media.title + " [" + media.url + "]");
+			console.log("public notification received:" + media);
 			$("#myTitle").html(media.title);
 			var image = new Image();
-			image.src = media.url;
-			$("#myImage").attr("src", media.url);
+			image.src = media.media;
+			$("#myImage").attr("src", media.media);
+			$("#myLink").attr("href", media.link);
+			$("#mySource").html(media.source);
 		});
 
 		console.info(myapp.mediaNames());
 		myapp.updateMedia();
 		setInterval(function () {
 			myapp.updateMedia()
-		}, 30000);
+		}, 5000);
 	});
 </script>
 </body>

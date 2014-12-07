@@ -14,8 +14,8 @@ function Screen(medias) {
 	this.addMedias(medias);
 	this._internalChannel = "/Screen/_currentMedia";
 
-	this.media = $({});
-	this.media.on(this._internalChannel, function (event, media) {
+	this.$mediaReceived = $({});
+	this.$mediaReceived.on(this._internalChannel, function (event, media) {
 		//console.debug("internal notification received");
 		//console.log("public notification triggering...");
 		$.event.trigger(Screen.prototype.PUBLIC_TOPIC, [media]);
@@ -29,14 +29,12 @@ Screen.prototype.updateMedia = function () {
 	if (currentMedia instanceof Media) {
 		$.ajax({
 			url: currentMedia.url,
-			dataType: "jsonp",
-			beforeSend: function (jqXHR, settings) {
-
-			}
+			dataType: currentMedia.dataType,
+			timeout: 10000
 		}).done(function (data, textStatus, jqXHR) {
 			currentMedia.updateMedia(data);
 		}).fail(function (jqXHR, textStatus, errorThrown) {
-			console.log("Failed : " + jqXHR.toString() + " " + textStatus);
+			console.debug("Failed : jqXHR-> " + jqXHR.toString() + " status-> [" + textStatus + "] exception-> [" + errorThrown + "]");
 		});
 	}
 };
@@ -51,9 +49,13 @@ Screen.prototype.mediaNames = function () {
 	return result;
 };
 
+/**
+ *
+ * @param {MediaDTO} newMedia
+ */
 Screen.prototype.notify = function (newMedia) {
 	//console.debug("internal notification triggering..."+newMedia.title+" ["+newMedia.url+"]");
-	this.media.trigger(this._internalChannel, [newMedia]);
+	this.$mediaReceived.trigger(this._internalChannel, [newMedia]);
 };
 
 Screen.prototype.addMedias = function (medias) {

@@ -9,6 +9,8 @@
 function Media(name, url) {
 	this.name = name;
 	this.url = url;
+	this.dataType = "jsonp";
+	this._currentMedia = new MediaDTO();
 
 	this._currentMedia = Object.defineProperties({}, {
 		title: {value: "", writable: true, enumerable: true, configurable: true},
@@ -21,11 +23,38 @@ Media.prototype.updateMedia = function (media) {
 	throw new SyntaxError("This has to be implemented");
 };
 
-Media.prototype.notify = function () {
-	//console.debug(this.name + ": notifies the screen");
-	this._screen.notify({title: this._currentMedia.title, url: this._currentMedia.url});
+Media.prototype.notifyScreen = function () {
+	this._screen.notify(this._currentMedia);
 };
 
 Media.prototype.setScreen = function (screen) {
 	this._screen = screen;
 };
+
+/**
+ *
+ * @param {MediaDTO} aMedia
+ */
+Media.prototype.setCurrentMedia = function (aMedia) {
+	this._currentMedia = aMedia;
+	this.notifyScreen();
+};
+
+/**
+ *
+ * @param {String} title title of the post
+ * @param {String} media direct url to the media (jpg, png, gif, video, text)
+ * @param {String} link direct url to the post
+ * @param {String} source name of the website
+ * @constructor
+ */
+function MediaDTO(title, media, link, source) {
+	this.title = title;
+	this.media = media;
+	this.link = link;
+	this.source = source;
+}
+
+MediaDTO.prototype.toString = function () {
+	return this.source+":"+this.title +" ["+this.media+"] ["+this.link+"]";
+}
