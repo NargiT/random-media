@@ -20,7 +20,7 @@
 <div class="container">
 	<h2 id="mySource"></h2>
 	<h3 id="myTitle"></h3>
-	<a id="myLink" href="" target="_blank"><img id="myImage" src=""/></a>
+	<a id="myLink" href="" target="_blank"><img id="myImage" src="" alt="loading nex media"/></a>
 </div>
 <script>
 	$(document).ready(function () {
@@ -33,12 +33,14 @@
 
 		$(document).bind(myapp.PUBLIC_TOPIC, function (event, media) {
 			console.log("public notification received:" + media);
-			$("#myTitle").html(media.title);
 			var image = new Image();
+			image.onload = function() {
+				$("#myTitle").html(media.title);
+				$("#myLink").html(this);
+				$("#myLink").attr("href", media.link);
+				$("#mySource").html(media.source);
+			};
 			image.src = media.media;
-			$("#myImage").attr("src", media.media);
-			$("#myLink").attr("href", media.link);
-			$("#mySource").html(media.source);
 		});
 
 		console.info(myapp.mediaNames());
