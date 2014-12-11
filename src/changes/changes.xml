@@ -1,0 +1,15 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+	<properties>
+		<title>Spring Fun Project</title>
+		<author email="nargit@msn.com">Tigran Tch.</author>
+	</properties>
+	<body>
+		<release version="0.0.1" date="2014-12-11" description="First release">
+			<action dev="nargit" type="add">
+				Add maven-changes-plugin with GitHub report
+			</action>
+		</release>
+	</body>
+</document>
