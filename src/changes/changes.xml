@@ -8,7 +8,7 @@
 	<body>
 		<release version="0.0.1" date="2014-12-11" description="First release">
 			<action dev="nargit" type="add">
-				Add maven-changes-plugin with GitHub report
+				<fixes issue="1" />
 			</action>
 		</release>
 	</body>

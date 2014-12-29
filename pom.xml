@@ -9,7 +9,7 @@
 
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/NargiT/${project.artifactId}/issues/</url>
+		<url>https://github.com/NargiT/${project.artifactId}/issues</url>
 	</issueManagement>
 
 	<reporting>
